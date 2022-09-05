@@ -8,6 +8,10 @@ const exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+//MongoDB setting
+const mongoose = require('mongoose')
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+
 //setting static files
 app.use(express.static('public'))
 
@@ -16,6 +20,16 @@ const restaurantList = require('./restaurant.json')
 
 // set server related variable
 const port = 3000
+
+//MongoDB connection status
+
+const db = mongoose.connection
+db.on('error', () => {
+  console.log('mongoose error.')
+})
+db.once('open', () => {
+  console.log('mongodb connected.')
+})
 
 //set route 
 app.get('/', (req, res) => {
