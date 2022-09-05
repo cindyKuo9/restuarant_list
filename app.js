@@ -11,15 +11,15 @@ app.set('view engine', 'handlebars')
 //MongoDB setting
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+const Restaurant = require('./models/restaurant')
+
 
 //setting static files
 app.use(express.static('public'))
 
-//JSON
-const restaurantList = require('./restaurant.json')
-
 // set server related variable
 const port = 3000
+
 
 //MongoDB connection status
 
@@ -31,25 +31,39 @@ db.once('open', () => {
   console.log('mongodb connected.')
 })
 
-//set route 
+
+//set route
+//get 
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  Restaurant.find()
+    .lean()
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.log(error))
 })
 
 app.get('/search', (req, res) => {
-  const restuarants = restaurantList.results.filter(restaurant => {
-    if (restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase())) {
-      return true;
-    } else {
-      return restaurant.category.toLowerCase().includes(req.query.keyword.toLowerCase())
-    }
-  })
-  res.render('index', { restaurants: restuarants, keyword: req.query.keyword })
+  Restaurant.find()
+    .lean()
+    .then(restaurantList => {
+      const restuarants = restaurantList.filter(restaurant => {
+        if (restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase())) {
+          return true;
+        } else {
+          return restaurant.category.toLowerCase().includes(req.query.keyword.toLowerCase())
+        }
+      })
+      res.render('index', { restaurants: restuarants, keyword: req.query.keyword })
+    })
+    .catch(error => console.log(error))
 })
 
 app.get('/restaurants/:id', (req, res) => {
-  const restaurant = restaurantList.results.find(restuarant => restuarant.id.toString() === req.params.id)
-  res.render('show', { restaurant: restaurant })
+  Restaurant.findById(req.params.id)
+    .lean()
+    .then(restaurant => {
+      res.render('show', { restaurant })
+    })
+    .catch(error => console.log(error))
 })
 
 //listen on server
