@@ -75,6 +75,17 @@ app.get('/restaurants', (req, res) => {
   res.render('new')
 })
 
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  Restaurant.findById(id)
+    .lean()
+    .then(restaurant => {
+      console.log()
+      res.render('edit', { restaurant })
+    })
+    .catch(error => console.log(error))
+})
+
 //post
 app.post('/restaurants', (req, res) => {
   Restaurant.create(req.body)
@@ -90,6 +101,28 @@ app.post('/restaurants/:id/delete', (req, res) => {
     .catch(error => console.log(error))
 })
 
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const restaurantParams = req.body
+  console.log(req.body)
+  Restaurant.findById(id)
+    .then(restaurant => {
+
+      restaurant.name = restaurantParams.name
+      restaurant.name_en = restaurantParams.name_en
+      restaurant.category = restaurantParams.category
+      restaurant.image = restaurantParams.image
+      restaurant.location = restaurantParams.location
+      restaurant.phone = restaurantParams.phone
+      restaurant.google_map = restaurantParams.google_map
+      restaurant.rating = restaurantParams.rating
+      restaurant.description = restaurantParams.description
+
+      restaurant.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log(error))
+})
 
 //listen on server
 app.listen(port, () => {
