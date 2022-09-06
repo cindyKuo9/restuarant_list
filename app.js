@@ -13,6 +13,8 @@ const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 const Restaurant = require('./models/restaurant')
 
+const bodyParser = require('body-parser')
+
 
 //setting static files
 app.use(express.static('public'))
@@ -31,6 +33,8 @@ db.once('open', () => {
   console.log('mongodb connected.')
 })
 
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //set route
 //get 
@@ -63,6 +67,17 @@ app.get('/restaurants/:id', (req, res) => {
     .then(restaurant => {
       res.render('show', { restaurant })
     })
+    .catch(error => console.log(error))
+})
+
+app.get('/restaurants', (req, res) => {
+  res.render('new')
+})
+
+//post
+app.post('/restaurants', (req, res) => {
+  Restaurant.create(req.body)
+    .then(() => { res.redirect('/') })
     .catch(error => console.log(error))
 })
 
