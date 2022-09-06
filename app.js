@@ -62,7 +62,8 @@ app.get('/search', (req, res) => {
 })
 
 app.get('/restaurants/:id', (req, res) => {
-  Restaurant.findById(req.params.id)
+  const id = req.params.id
+  Restaurant.findById(id)
     .lean()
     .then(restaurant => {
       res.render('show', { restaurant })
@@ -80,6 +81,15 @@ app.post('/restaurants', (req, res) => {
     .then(() => { res.redirect('/') })
     .catch(error => console.log(error))
 })
+
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  Restaurant.findById(id)
+    .then(restaurant => { restaurant.remove() })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 
 //listen on server
 app.listen(port, () => {
