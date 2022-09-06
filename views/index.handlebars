@@ -46,11 +46,13 @@
             </span>
 
           </div>
-          <a href="/restaurants/{{this._id}}/edit" class="text-secondary"> edit </a>
-          <a href="/restaurants/{{this._id}}" class="text-secondary"> detail </a>
-          <form action="/restaurants/{{this._id}}/delete" method="POST" style="display:inline;">
-            <button type="submit"> delete </button>
-          </form>
+          <div class="card-footer d-flex justify-content-end flex-wrap">
+            <a href="/restaurants/{{this._id}}/edit" class="text-secondary"><button>edit</button> </a>
+            <a href="/restaurants/{{this._id}}" class="text-secondary"><button>detail</button></a>
+            <form action="/restaurants/{{this._id}}/delete" method="POST" style="display:inline;">
+              <button type="submit"> delete </button>
+            </form>
+          </div>
         </div>
 
 
