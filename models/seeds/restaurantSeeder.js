@@ -12,8 +12,8 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongoose connected')
 
-  restaurantList.results.forEach(restaurant => {
-    Restaurant.create(restaurant)
-  })
-  console.log('done')
+  Restaurant.create(restaurantList.results)
+    .then(() => { console.log("restaurantSeeder done.") })
+    .catch(error => { console.log(error) })
+    .finally(() => { db.close() })
 })
