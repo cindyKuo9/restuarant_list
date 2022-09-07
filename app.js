@@ -15,9 +15,11 @@ const Restaurant = require('./models/restaurant')
 
 const bodyParser = require('body-parser')
 
+const methodOverride = require('method-override')
 
 //setting static files
 app.use(express.static('public'))
+app.use(methodOverride('_method'))
 
 // set server related variable
 const port = 3000
@@ -108,7 +110,7 @@ app.post('/restaurants', (req, res) => {
     })
 })
 
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   Restaurant.findById(id)
     .then(restaurant => { restaurant.remove() })
@@ -119,7 +121,7 @@ app.post('/restaurants/:id/delete', (req, res) => {
     })
 })
 
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   const restaurantParams = req.body
   console.log(req.body)

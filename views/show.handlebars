@@ -39,7 +39,7 @@
       <div class="text-center">
         <a href="/restaurants/{{restaurant._id}}/edit" class="text-secondary"><button>edit</button> </a>
         <a href="/" class="text-secondary"><button>back</button></a>
-        <form action="/restaurants/{{restaurant._id}}/delete" method="POST" style="display:inline;">
+        <form action="/restaurants/{{restaurant._id}}?_method=DELETE" method="POST" style="display:inline;">
           <button type="submit"> delete </button>
         </form>
       </div>
