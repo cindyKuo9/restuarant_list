@@ -10,12 +10,7 @@
 2. 將專案clone至本地
    git clone https://github.com/cindyKuo9/restuarant_list.git
    
-3. 進入專案資料夾安裝相關套件
-4. npm i express@4.17.1
-5. npm i express-handlebars@4.0.2
-6. npm i body-parser@1.20.0
-7. npm i method-override@3.0.0
-8. npm i mongoose@6.5.4
-
-9. 執行專案 npm run dev
-10. 使用瀏覽器連結 localhost:3000
+3. 進入專案資料夾安裝相關套件 npm install
+4. 設定環境變數 MONGODB_URI=mongodb+srv://**\<Your MongoDB Account\>**:**\<Your MongoDB Password\>**@cluster0.popacfe.mongodb.net/**\<Your MongoDB Table\>**?retryWrites=true&w=majority
+5. 執行專案 npm run dev
+6. 使用瀏覽器連結 localhost:3000
