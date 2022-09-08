@@ -10,8 +10,12 @@
 2. 將專案clone至本地
    git clone https://github.com/cindyKuo9/restuarant_list.git
    
-3. 進入專資料夾安裝Express
-   Expressnpm i express@4.16.4
+3. 進入專資料夾安裝相關套件
+   npm i express@4.17.1
+   npm i express-handlebars@4.0.2
+   npm i body-parser@1.20.0
+   npm i method-override@3.0.0
+   npm i mongoose@6.5.4
    
 4. 執行專案
    npm run dev
